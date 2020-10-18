@@ -117,10 +117,10 @@ namespace DotNetProject.Features
     testRunner.When("I post to checkout API with order details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 10
-    testRunner.Then("the total should be 58.4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("the final total should be 58.4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 11
-    testRunner.And("response code should be returned \"200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("response code should return \"200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -131,7 +131,7 @@ namespace DotNetProject.Features
         [Xunit.TraitAttribute("Description", "Update order")]
         [Xunit.InlineDataAttribute("2", "1", "2", "0", "0", "2", "0", "19.8", "35.2", new string[0])]
         [Xunit.InlineDataAttribute("3", "4", "4", "4", "-1", "-1", "-1", "58.4", "43.8", new string[0])]
-        public virtual void UpdateOrder(string orderID, string initialStarter, string initialMain, string initialDrink, string starters, string mains, string drinks, string initialTotal, string total, string[] exampleTags)
+        public virtual void UpdateOrder(string orderID, string initialStarter, string initialMain, string initialDrink, string starter, string main, string drink, string initialTotal, string total, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -139,9 +139,9 @@ namespace DotNetProject.Features
             argumentsOfScenario.Add("InitialStarter", initialStarter);
             argumentsOfScenario.Add("InitialMain", initialMain);
             argumentsOfScenario.Add("InitialDrink", initialDrink);
-            argumentsOfScenario.Add("Starters", starters);
-            argumentsOfScenario.Add("Mains", mains);
-            argumentsOfScenario.Add("Drinks", drinks);
+            argumentsOfScenario.Add("Starter", starter);
+            argumentsOfScenario.Add("Main", main);
+            argumentsOfScenario.Add("Drink", drink);
             argumentsOfScenario.Add("InitialTotal", initialTotal);
             argumentsOfScenario.Add("Total", total);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update order", null, tagsOfScenario, argumentsOfScenario);
@@ -173,16 +173,16 @@ namespace DotNetProject.Features
     testRunner.When("I post to checkout API with order details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
-    testRunner.And(string.Format("I updated the same order {0} {1} {2} to checkout", starters, mains, drinks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("I updated the same order {0} {1} {2} to checkout", starter, main, drink), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 17
     testRunner.Then(string.Format("the initial total should be {0}", initialTotal), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 18
-    testRunner.And(string.Format("the total should be {0}", total), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("the final total should be {0}", total), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 19
-    testRunner.And("response code should be returned \"200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("response code should return \"200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

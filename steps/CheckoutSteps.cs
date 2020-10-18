@@ -24,7 +24,6 @@ namespace DotNetProject.src.steps
             order.Sum = sum;
 
             context.Set(order,"Order");
-            context.Set(sum,"Total");
         }
 
         [When(@"I post to checkout API with order details")]
@@ -35,16 +34,18 @@ namespace DotNetProject.src.steps
             string res = resp.Content.ReadAsStringAsync().Result;
             dynamic test = JsonConvert.DeserializeObject(res);
             context.Set(resp.StatusCode, "ResponseStatusCode"); 
+            context.Set((double)test.data.Sum, "FinalSumReturned");
+            context.Set((double)test.data.Sum, "InitialSumReturned");
         }
 
 
-        [Then(@"the total should be (.*)")]
-        public void ThenTheTotalShouldBe(double total){
-            Assert.Equal(total, (double)context.Get<double>("Total"));
+        [Then(@"the final total should be (.*)")]
+        public void ThenTheFinalTotalShouldBe(double total){
+            Assert.Equal(total, context.Get<double>("FinalSumReturned"));
         }
 
-        [Then(@"response code should be returned ""(.*)""")]
-        public void ThenResponseCodeShouldBeReturned(int status){
+        [Then(@"response code should return ""(.*)""")]
+        public void ThenResponseCodeShouldReturn(int status){
             Assert.Equal(status, (int)context.Get<HttpStatusCode>("ResponseStatusCode"));
         }
 
@@ -59,8 +60,6 @@ namespace DotNetProject.src.steps
             initialOrder.Sum = sum;
 
             context.Set(initialOrder,"Order");
-            context.Set(sum,"Total");
-            context.Set(sum,"InitialTotal");
         }
 
         [When(@"I updated the same order (.*) (.*) (.*) to checkout")]
@@ -77,18 +76,18 @@ namespace DotNetProject.src.steps
             updateOrder.Sum = sum;
 
             context.Set(updateOrder,"Order");
-            context.Set(sum,"Total");
 
             var json = JsonConvert.SerializeObject((Order)context.Get<Order>("Order"));
             var resp = await Helpers.PostOrder(json);
             string res = resp.Content.ReadAsStringAsync().Result;
             dynamic test = JsonConvert.DeserializeObject(res);
             context.Set(resp.StatusCode, "ResponseStatusCode");
+            context.Set((double)test.data.Sum, "FinalSumReturned");
         }
 
         [Then(@"the initial total should be (.*)")]
         public void ThenTheInitialTotalShouldBe(double total){
-            Assert.Equal(total, (double)context.Get<double>("InitialTotal"));
+            Assert.Equal(total, context.Get<double>("InitialSumReturned"));
         }
     }
 }
