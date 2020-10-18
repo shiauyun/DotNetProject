@@ -1,8 +1,6 @@
 using System;
 using TechTalk.SpecFlow;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Text;
 using Newtonsoft.Json;
 using Xunit;
 using System.Net;
@@ -32,15 +30,11 @@ namespace DotNetProject.src.steps
         [When(@"I post to checkout API with order details")]
         public async Task WhenIPostToCheckoutAPIWithOrderDetails(){
             var json = JsonConvert.SerializeObject((Order)context.Get<Order>("Order"));
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var url = "https://postman-echo.com/post";
-            using var client = new HttpClient();
-            var response = await client.PostAsync(url, data);
-            string result = response.Content.ReadAsStringAsync().Result;
-            dynamic test = JsonConvert.DeserializeObject(result);
-
-            context.Set(response.StatusCode, "ResponseStatusCode");
+            
+            var resp = await Helpers.PostOrder(json);
+            string res = resp.Content.ReadAsStringAsync().Result;
+            dynamic test = JsonConvert.DeserializeObject(res);
+            context.Set(resp.StatusCode, "ResponseStatusCode"); 
         }
 
 
@@ -66,6 +60,7 @@ namespace DotNetProject.src.steps
 
             context.Set(initialOrder,"Order");
             context.Set(sum,"Total");
+            context.Set(sum,"InitialTotal");
         }
 
         [When(@"I updated the same order (.*) (.*) (.*) to checkout")]
@@ -85,16 +80,15 @@ namespace DotNetProject.src.steps
             context.Set(sum,"Total");
 
             var json = JsonConvert.SerializeObject((Order)context.Get<Order>("Order"));
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var resp = await Helpers.PostOrder(json);
+            string res = resp.Content.ReadAsStringAsync().Result;
+            dynamic test = JsonConvert.DeserializeObject(res);
+            context.Set(resp.StatusCode, "ResponseStatusCode");
+        }
 
-            var url = "https://postman-echo.com/post";
-            using var client = new HttpClient();
-            var response = await client.PostAsync(url, data);
-            string result = response.Content.ReadAsStringAsync().Result;
-            dynamic test = JsonConvert.DeserializeObject(result);
-
-            context.Set(response.StatusCode, "ResponseStatusCode");
-
+        [Then(@"the initial total should be (.*)")]
+        public void ThenTheInitialTotalShouldBe(double total){
+            Assert.Equal(total, (double)context.Get<double>("InitialTotal"));
         }
     }
 }

@@ -110,8 +110,8 @@ namespace DotNetProject.Features
             {
                 this.ScenarioStart();
 #line 8
-    testRunner.Given("I have taken the order from customer with following order \"{\'OrderID\': \'1\',\'Start" +
-                        "ers\':\'4\',\'Mains\':\'4\',\'Drinks\':\'4\'}\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I have taken the order from customer with following order \"{\'OrderID\': 1,\'Starter" +
+                        "s\':4,\'Mains\':4,\'Drinks\':4}\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 9
     testRunner.When("I post to checkout API with order details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -129,9 +129,9 @@ namespace DotNetProject.Features
         [Xunit.SkippableTheoryAttribute(DisplayName="Update order")]
         [Xunit.TraitAttribute("FeatureTitle", "Checkout System")]
         [Xunit.TraitAttribute("Description", "Update order")]
-        [Xunit.InlineDataAttribute("2", "1", "2", "0", "0", "2", "0", "35.2", new string[0])]
-        [Xunit.InlineDataAttribute("3", "4", "4", "4", "-1", "-1", "-1", "43.8", new string[0])]
-        public virtual void UpdateOrder(string orderID, string initialStarter, string initialMain, string initialDrink, string starters, string mains, string drinks, string total, string[] exampleTags)
+        [Xunit.InlineDataAttribute("2", "1", "2", "0", "0", "2", "0", "19.8", "35.2", new string[0])]
+        [Xunit.InlineDataAttribute("3", "4", "4", "4", "-1", "-1", "-1", "58.4", "43.8", new string[0])]
+        public virtual void UpdateOrder(string orderID, string initialStarter, string initialMain, string initialDrink, string starters, string mains, string drinks, string initialTotal, string total, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -142,6 +142,7 @@ namespace DotNetProject.Features
             argumentsOfScenario.Add("Starters", starters);
             argumentsOfScenario.Add("Mains", mains);
             argumentsOfScenario.Add("Drinks", drinks);
+            argumentsOfScenario.Add("InitialTotal", initialTotal);
             argumentsOfScenario.Add("Total", total);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update order", null, tagsOfScenario, argumentsOfScenario);
 #line 13
@@ -175,9 +176,12 @@ namespace DotNetProject.Features
     testRunner.And(string.Format("I updated the same order {0} {1} {2} to checkout", starters, mains, drinks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 17
-    testRunner.Then(string.Format("the total should be {0}", total), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then(string.Format("the initial total should be {0}", initialTotal), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 18
+    testRunner.And(string.Format("the total should be {0}", total), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 19
     testRunner.And("response code should be returned \"200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }

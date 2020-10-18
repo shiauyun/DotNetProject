@@ -2,7 +2,6 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace DotNetProject
 {
@@ -25,7 +24,6 @@ namespace DotNetProject
             var url = "https://postman-echo.com/post";
             using var client = new HttpClient();
             HttpResponseMessage response = await client.PostAsync(url, data);
-            // string result = response.Content.ReadAsStringAsync().Result;
             return response;
 
         }
