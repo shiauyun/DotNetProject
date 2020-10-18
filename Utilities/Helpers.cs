@@ -1,4 +1,8 @@
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace DotNetProject
 {
@@ -12,6 +16,18 @@ namespace DotNetProject
             double sumFood = (((starterCost * startersQty)+(mainCost * mainQty))*1.1);
             double total = Math.Round((sumFood+(drinkCost * drinkQty)),2);
             return total;
+        }
+
+        public static async Task<HttpResponseMessage> PostOrder(string jsonOrderData){
+
+            var data = new StringContent(jsonOrderData, Encoding.UTF8, "application/json");
+
+            var url = "https://postman-echo.com/post";
+            using var client = new HttpClient();
+            HttpResponseMessage response = await client.PostAsync(url, data);
+            // string result = response.Content.ReadAsStringAsync().Result;
+            return response;
+
         }
     }
 }

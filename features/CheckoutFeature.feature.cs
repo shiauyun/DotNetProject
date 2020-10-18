@@ -28,7 +28,7 @@ namespace DotNetProject.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "ExampleFeature.feature"
+#line 1 "CheckoutFeature.feature"
 #line hidden
         
         public CheckoutSystemFeature(CheckoutSystemFeature.FixtureData fixtureData, DotNetProject_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
@@ -81,14 +81,14 @@ namespace DotNetProject.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="One time order")]
+        [Xunit.SkippableFactAttribute(DisplayName="One order")]
         [Xunit.TraitAttribute("FeatureTitle", "Checkout System")]
-        [Xunit.TraitAttribute("Description", "One time order")]
-        public virtual void OneTimeOrder()
+        [Xunit.TraitAttribute("Description", "One order")]
+        public virtual void OneOrder()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("One time order", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("One order", null, tagsOfScenario, argumentsOfScenario);
 #line 7
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,14 +110,14 @@ namespace DotNetProject.Features
             {
                 this.ScenarioStart();
 #line 8
-    testRunner.Given("I have taken the orders from customer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I have taken the order from customer with following order \"{\'OrderID\': \'1\',\'Start" +
+                        "ers\':\'4\',\'Mains\':\'4\',\'Drinks\':\'4\'}\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 9
-    testRunner.When("I post to checkout API with following order details \"{\'OrderID\': \'1\',\'Starters\':\'" +
-                        "4\',\'Mains\':\'4\',\'Drinks\':\'4\'}\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I post to checkout API with order details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 10
-    testRunner.Then("the total should be \"58.4\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("the total should be 58.4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 11
     testRunner.And("response code should be returned \"200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -126,14 +126,24 @@ namespace DotNetProject.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="One order")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Update order")]
         [Xunit.TraitAttribute("FeatureTitle", "Checkout System")]
-        [Xunit.TraitAttribute("Description", "One order")]
-        public virtual void OneOrder()
+        [Xunit.TraitAttribute("Description", "Update order")]
+        [Xunit.InlineDataAttribute("2", "1", "2", "0", "0", "2", "0", "35.2", new string[0])]
+        [Xunit.InlineDataAttribute("3", "4", "4", "4", "-1", "-1", "-1", "43.8", new string[0])]
+        public virtual void UpdateOrder(string orderID, string initialStarter, string initialMain, string initialDrink, string starters, string mains, string drinks, string total, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("One order", null, tagsOfScenario, argumentsOfScenario);
+            argumentsOfScenario.Add("OrderID", orderID);
+            argumentsOfScenario.Add("InitialStarter", initialStarter);
+            argumentsOfScenario.Add("InitialMain", initialMain);
+            argumentsOfScenario.Add("InitialDrink", initialDrink);
+            argumentsOfScenario.Add("Starters", starters);
+            argumentsOfScenario.Add("Mains", mains);
+            argumentsOfScenario.Add("Drinks", drinks);
+            argumentsOfScenario.Add("Total", total);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update order", null, tagsOfScenario, argumentsOfScenario);
 #line 13
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -155,99 +165,21 @@ namespace DotNetProject.Features
             {
                 this.ScenarioStart();
 #line 14
-    testRunner.Given("I have taken the order from customer with following order \"{\'OrderID\': \'1\',\'Start" +
-                        "ers\':\'4\',\'Mains\':\'4\',\'Drinks\':\'4\'}\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given(string.Format("I have taken the initial order from customer with following order {0} {1} {2} {3}" +
+                            "", orderID, initialStarter, initialMain, initialDrink), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
     testRunner.When("I post to checkout API with order details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
-    testRunner.Then("the total should be \"58.4\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.And(string.Format("I updated the same order {0} {1} {2} to checkout", starters, mains, drinks), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 17
+    testRunner.Then(string.Format("the total should be {0}", total), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 18
     testRunner.And("response code should be returned \"200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Update order")]
-        [Xunit.TraitAttribute("FeatureTitle", "Checkout System")]
-        [Xunit.TraitAttribute("Description", "Update order")]
-        public virtual void UpdateOrder()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update order", null, tagsOfScenario, argumentsOfScenario);
-#line 19
-    this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 20
-    testRunner.Given("I have taken the order from customer with following order \"{\'OrderID\': \'2\',\'Start" +
-                        "ers\':\'1\',\'Mains\':\'2\'}\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 21
-    testRunner.When("I post to checkout API with order details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 22
-    testRunner.And("I updated the same order <Starters> <Mains> <Drinks> to checkout", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 23
-    testRunner.Then("the total should be <Total>", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 24
-    testRunner.And("response code should be returned \"200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="order")]
-        [Xunit.TraitAttribute("FeatureTitle", "Checkout System")]
-        [Xunit.TraitAttribute("Description", "order")]
-        public virtual void Order()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("order", "    | Starters | Mains | Drinks | Total |\r\n    | 0        | 2     | 0      | 35.2" +
-                    "  |\r\n    | -1       | -1    | -1     | 43.8  |", tagsOfScenario, argumentsOfScenario);
-#line 26
-    this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
             }
             this.ScenarioCleanup();
         }
